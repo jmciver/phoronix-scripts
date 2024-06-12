@@ -11,7 +11,7 @@ ulimit -s unlimited
 unset CPPFLAGS
 unset CXXFLAGS
 
-if [ `lscpu | grep -ic arm` = 1 ]
+if [[ `lscpu | grep -ic arm` = 1 ]]
 then
     if [[ $(groups | grep -q sudoers) -eq 0 ]]
     then
@@ -43,7 +43,7 @@ do
 	sh -c "$pts_command" 2>&1| tee -a $LOG_FILE
 done
 
-if [ `lscpu | grep -ic arm` = 1 ]
+if [[ `lscpu | grep -ic arm` = 1 ]]
 then
 	unset NUM_CPU_PHYSICAL_CORES
 	unset NUM_CPU_CORES
