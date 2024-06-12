@@ -8,8 +8,8 @@ echo $batch_setup | $PTS batch-setup
 # Why did I need this?
 ulimit -s unlimited
 
-unset CPPFLAGS
-unset CXXFLAGS
+# unset CPPFLAGS
+# unset CXXFLAGS
 
 if [[ `lscpu | grep -ic arm` = 1 ]]
 then
@@ -32,8 +32,8 @@ do
 	sh -c "$pts_command" 2>&1| tee -a $LOG_FILE
 done
 
-CC=`pwd`/llvm-project-llvmorg-15.0.7/build/bin/clang
-CXX=`pwd`/llvm-project-llvmorg-15.0.7/build/bin/clang++
+# CC=`pwd`/llvm-project-llvmorg-15.0.7/build/bin/clang
+# CXX=`pwd`/llvm-project-llvmorg-15.0.7/build/bin/clang++
 
 for p in $(grep -v '#' categorized-profiles.txt | grep '/build-')
 do
