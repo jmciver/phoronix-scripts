@@ -31,31 +31,31 @@ rm -rf $PTS_BASE/test-results-*
 
 mkdir size-results || true
 
-# Download llvm-15 used by pts/build-llvm benchmark
-if [ ! -d llvm-project-llvmorg-15.0.7 ]
-then
-	wget https://codeload.github.com/llvm/llvm-project/tar.gz/refs/tags/llvmorg-15.0.7
-	tar xzvf llvmorg-15.0.7
-fi
+# # Download llvm-15 used by pts/build-llvm benchmark
+# if [ ! -d llvm-project-llvmorg-15.0.7 ]
+# then
+# 	wget https://codeload.github.com/llvm/llvm-project/tar.gz/refs/tags/llvmorg-15.0.7
+# 	tar xzvf llvmorg-15.0.7
+# fi
 
-# Download my modified phoronix-test-suite
-if [ ! -d $HOME/git/phoronix-test-suite ]
-then
-	(cd $HOME/git && git clone https://github.com/lucic71/phoronix-test-suite)
-fi
+# # Download my modified phoronix-test-suite
+# if [ ! -d $HOME/git/phoronix-test-suite ]
+# then
+# 	(cd $HOME/git && git clone https://github.com/lucic71/phoronix-test-suite)
+# fi
 
-# Download my modified test-profiles
-if [ ! -d $HOME/git/test-profiles ]
-then
-	(cd $HOME/git && git clone https://github.com/lucic71/test-profiles && \
-	 cd test-profiles && git checkout ub && cd .. && rm -rf $PTS_BASE/test-profiles && \
-	 cp -r test-profiles $PTS_BASE)
-fi
+# # Download my modified test-profiles
+# if [ ! -d $HOME/git/test-profiles ]
+# then
+# 	(cd $HOME/git && git clone https://github.com/lucic71/test-profiles && \
+# 	 cd test-profiles && git checkout ub && cd .. && rm -rf $PTS_BASE/test-profiles && \
+# 	 cp -r test-profiles $PTS_BASE)
+# fi
 
-if [ ! -d "${PTS_BASE}/test-profiles" ]
-then
-    rm -rf $PTS_BASE/test-profiles && cp -r test-profiles $PTS_BASE
-fi
+# if [ ! -d "${PTS_BASE}/test-profiles" ]
+# then
+#     rm -rf $PTS_BASE/test-profiles && cp -r test-profiles $PTS_BASE
+# fi
 
 # Install dependencies
 if [[ $(groups | grep -q sudoers) -eq 0 ]]
