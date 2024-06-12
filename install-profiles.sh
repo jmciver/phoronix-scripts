@@ -1,4 +1,4 @@
-#!/bin/sh -ex
+#!/usr/bin/bash -ex
 
 CONCAT_FLAGS=`echo $@ | tr -d ' '`
 LOG_DIR="install-logs""$CONCAT_FLAGS"
@@ -8,10 +8,13 @@ mkdir $LOG_DIR/local || true
 
 # Put CPUs is performance mode at the max frequency for compiling the benchmarks.
 # For ARM it will be set to 1.00GHz before running the benchmarks.
-sudo cpupower frequency-set \
-	-g performance \
-	--min `cpupower frequency-info | grep "hardware limits" | awk '{print $6,$7}' | tr -d ' '` \
-	--max `cpupower frequency-info | grep "hardware limits" | awk '{print $6,$7}' | tr -d ' '`
+if [[ $(groups | grep -q sudoers) -eq 0 ]]
+then
+    sudo cpupower frequency-set \
+	 -g performance \
+	 --min `cpupower frequency-info | grep "hardware limits" | awk '{print $6,$7}' | tr -d ' '` \
+	 --max `cpupower frequency-info | grep "hardware limits" | awk '{print $6,$7}' | tr -d ' '`
+fi
 
 PTS_COMMAND="(trap 'kill 0' INT; "
 # Omit the profiles in LLVM Build Speed as they need special treatment
@@ -24,10 +27,10 @@ PTS_COMMAND=$PTS_COMMAND"wait)"
 eval $PTS_COMMAND
 
 # Process the profiles in LLVM Build Speed
-if [ $(grep -v '#' categorized-profiles.txt | grep '/build-' | wc -l) -gt 0 ]
+if [[ $(grep -v '#' categorized-profiles.txt | grep '/build-' | wc -l) -gt 0 ]]
 then
 	COMPILED_CLANG_PATH=`pwd`/llvm-project-llvmorg-15.0.7
-	if [ `lscpu | grep -ic x86` = 1 ]
+	if [[ `lscpu | grep -ic x86` = 1 ]]
 	then
 		(cd $COMPILED_CLANG_PATH && rm -rf build/ && cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD=X86 -DLLVM_ENABLE_ASSERTIONS=ON -DLLVM_ENABLE_PROJECTS="llvm;clang" -S ./llvm -B build/ && ninja -C build)
 	else
