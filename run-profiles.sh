@@ -1,4 +1,4 @@
-#!/bin/sh -ex
+#!/usr/bin/bash -ex
 
 LOG_FILE="run-logs$@.txt"
 
@@ -13,12 +13,15 @@ unset CXXFLAGS
 
 if [ `lscpu | grep -ic arm` = 1 ]
 then
+    if [[ $(groups | grep -q sudoers) -eq 0 ]]
+    then
 	sudo cpupower frequency-set \
 		-g performance \
 		--min 1.00Ghz \
 		--max 1.00GHz
 	export NUM_CPU_CORES=80
 	export NUM_CPU_PHYSICAL_CORES=80
+    fi
 fi
 
 for p in $(grep -v '#' categorized-profiles.txt | grep -v '/build-')
