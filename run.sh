@@ -19,7 +19,7 @@ then
 	PTS_BM_BASE=/mnt/tmp/pts
 fi
 
-LLVM_DIR=`pwd`/toolchain
+# LLVM_DIR=`pwd`/toolchain
 export PTS="php ${PTS_CORE_PATH}/pts-core/phoronix-test-suite.php"
 
 # Delete previous compiled binaries and previous results
@@ -76,8 +76,8 @@ do
 		export LDFLAGS=""
         fi
 
-	export CC=$LLVM_DIR/clang
-	export CXX=$LLVM_DIR/clang++
+	# export CC=$LLVM_DIR/clang
+	# export CXX=$LLVM_DIR/clang++
 
 	if [ "$flags" = "-all" ]
 	then
