@@ -96,7 +96,7 @@ do
 
 	./install-profiles.sh $flags
 	./record-size.sh      `echo $CONCAT_FLAGS | cut -c2-`
-	if [ `lscpu | grep -ic x86` = 1 ]
+	if [[ $(lscpu | grep -ic x86) = 1 -a $(groups | grep -q sudoers) -eq 0 ]]
 	then
 		sudo swapoff -a; sudo swapon -a
 	fi
