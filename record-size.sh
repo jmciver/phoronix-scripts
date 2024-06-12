@@ -1,4 +1,4 @@
-#!/bin/sh -ex
+#!/usr/bin/bash -ex
 
 # Create directory where binary sizes will be saved for current flag
 mkdir -p size-results/$1 || true
