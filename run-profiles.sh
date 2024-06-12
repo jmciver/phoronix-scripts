@@ -7,6 +7,7 @@ echo $batch_setup | $PTS batch-setup
 
 # Why did I need this?
 ulimit -s unlimited
+ulimit -c 0
 
 # unset CPPFLAGS
 # unset CXXFLAGS
