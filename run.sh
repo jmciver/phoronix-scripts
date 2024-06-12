@@ -1,16 +1,23 @@
-#!/bin/sh -ex
+#!/usr/bin/bash -ex
+
+if [ -f "local-config.bash" ]
+then
+    . "local-config.bash"
+fi
 
 # array of flags separated by :
-FLAGS=":-fwrapv:-fignore-pure-const-attrs:-fno-strict-aliasing:-fstrict-enums:-fno-delete-null-pointer-checks:-fconstrain-shift-value:-fno-finite-loops:-fno-constrain-bool-value:-fno-use-default-alignment:-fdrop-inbounds-from-gep -mllvm -disable-oob-analysis:-mllvm -zero-uninit-loads:-mllvm -disable-object-based-analysis:-fcheck-div-rem-overflow:-fdrop-noalias-restrict-attr:-fdrop-align-attr:-fdrop-deref-attr:-Xclang -no-enable-noundef-analysis:-fdrop-ub-builtins:-all"
+FLAGS=${FLAGS-":-fwrapv:-fignore-pure-const-attrs:-fno-strict-aliasing:-fstrict-enums:-fno-delete-null-pointer-checks:-fconstrain-shift-value:-fno-finite-loops:-fno-constrain-bool-value:-fno-use-default-alignment:-fdrop-inbounds-from-gep -mllvm -disable-oob-analysis:-mllvm -zero-uninit-loads:-mllvm -disable-object-based-analysis:-fcheck-div-rem-overflow:-fdrop-noalias-restrict-attr:-fdrop-align-attr:-fdrop-deref-attr:-Xclang -no-enable-noundef-analysis:-fdrop-ub-builtins:-all"}
+
 FLAGSNO=$((`echo $FLAGS | tr -cd ':' | wc -c`+1))
 
-PTS_BASE=$HOME/.phoronix-test-suite
-if [ `lscpu | grep -ic arm` = 1 ]
+PTS_BASE=${PTS_BASE-"$HOME/.phoronix-test-suite"}
+export PTS_BM_BASE=${PTS_BM_BASE-"/ssd/pts"}
+
+if [[ `lscpu | grep -ic arm` = 1 ]]
 then
-	export PTS_BM_BASE=/mnt/tmp/pts
-else
-	export PTS_BM_BASE=/ssd/pts
+	PTS_BM_BASE=/mnt/tmp/pts
 fi
+
 LLVM_DIR=`pwd`/toolchain
 export PTS="php $HOME/git/phoronix-test-suite/pts-core/phoronix-test-suite.php"
 
@@ -44,8 +51,18 @@ then
 	 cp -r test-profiles $PTS_BASE)
 fi
 
+if [ ! -d "${PTS_BASE}/test-profiles" ]
+then
+    rm -rf $PTS_BASE/test-profiles && cp -r test-profiles $PTS_BASE
+fi
+
 # Install dependencies
-sudo apt install -y libnl-genl-3-dev php-xml php-dom
+if [[ $(groups | grep -q sudoers) -eq 0 ]]
+then
+    sudo apt install -y libnl-genl-3-dev php-xml php-dom
+else
+    echo "Run apt install -y libnl-genl-3-dev php-xml php-dom"
+fi
 
 for i in $(seq 1 $FLAGSNO);
 do
