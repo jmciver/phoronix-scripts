@@ -11,6 +11,7 @@ FLAGS=${FLAGS-":-fwrapv:-fignore-pure-const-attrs:-fno-strict-aliasing:-fstrict-
 FLAGSNO=$((`echo $FLAGS | tr -cd ':' | wc -c`+1))
 
 PTS_BASE=${PTS_BASE-"$HOME/.phoronix-test-suite"}
+PTS_CORE_PATH=${PTS_CORE_PATH-"$HOME/git/phoronix-test-suite"}
 export PTS_BM_BASE=${PTS_BM_BASE-"/ssd/pts"}
 
 if [[ `lscpu | grep -ic arm` = 1 ]]
@@ -19,7 +20,7 @@ then
 fi
 
 LLVM_DIR=`pwd`/toolchain
-export PTS="php $HOME/git/phoronix-test-suite/pts-core/phoronix-test-suite.php"
+export PTS="php ${PTS_CORE_PATH}/pts-core/phoronix-test-suite.php"
 
 # Delete previous compiled binaries and previous results
 rm -rf $PTS_BM_BASE/installed-tests/*
