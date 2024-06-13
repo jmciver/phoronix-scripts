@@ -85,6 +85,9 @@ do
 		export UB_OPT_FLAG="$flags -O2"
 	fi
 
+        export CC="clang $UB_OPT_FLAG"
+        export CXX="clang++ $UB_OPT_FLAG"
+
 	if [ "$flags" = "" ]
 	then
 		flags="-base"
