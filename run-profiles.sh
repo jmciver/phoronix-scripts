@@ -14,7 +14,7 @@ ulimit -c 0
 
 if [[ `lscpu | grep -ic arm` = 1 ]]
 then
-    if [[ $(groups | grep -q sudoers) -eq 0 ]]
+    if [ $(groups | grep -q sudoers) = 0 ]
     then
 	sudo cpupower frequency-set \
 		-g performance \
