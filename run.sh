@@ -58,7 +58,7 @@ mkdir size-results || true
 # fi
 
 # Install dependencies
-if [[ $(groups | grep -q sudoers) -eq 0 ]]
+if [[ $(groups | grep -q sudoers) = 0 ]]
 then
     sudo apt install -y libnl-genl-3-dev php-xml php-dom
 else
@@ -76,15 +76,11 @@ do
 		export LDFLAGS=""
         fi
 
-	# export CC=$LLVM_DIR/clang
-	# export CXX=$LLVM_DIR/clang++
-
 	if [ "$flags" = "-all" ]
 	then
 		# Delete first character from FLAGS then delete ":-all" then replace ':' with ' '
 		_flags=`echo $FLAGS | cut -c2- | rev | cut -c6- | rev | tr ':' ' '`
 		export UB_OPT_FLAG="$_flags -O2"
-
 	else
 		export UB_OPT_FLAG="$flags -O2"
 	fi
@@ -97,7 +93,7 @@ do
 
 	./install-profiles.sh $flags
 	./record-size.sh      `echo $CONCAT_FLAGS | cut -c2-`
-	if [[ $(lscpu | grep -ic x86) = 1 -a $(groups | grep -q sudoers) -eq 0 ]]
+	if [[ $(lscpu | grep -ic x86) = 1 && $(groups | grep -q sudoers) = 0 ]]
 	then
 		sudo swapoff -a; sudo swapon -a
 	fi
