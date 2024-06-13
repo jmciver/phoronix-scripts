@@ -2,8 +2,8 @@
 
 LOG_FILE="run-logs$@.txt"
 
-batch_setup=`echo y && echo n && echo n && echo y && echo n && echo y && echo y`
-echo $batch_setup | $PTS batch-setup
+# batch_setup=`echo y && echo n && echo n && echo y && echo n && echo y && echo y`
+# echo $batch_setup | $PTS batch-setup
 
 # Why did I need this?
 ulimit -s unlimited
