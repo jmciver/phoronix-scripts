@@ -8,7 +8,7 @@ mkdir $LOG_DIR/local || true
 
 # Put CPUs is performance mode at the max frequency for compiling the benchmarks.
 # For ARM it will be set to 1.00GHz before running the benchmarks.
-if [[ $(groups | grep -q sudoers) = 0 ]]
+if [[ $ENABLE_SUDO_CHECK = 1 && $(groups | grep -q sudoers) = 0 ]]
 then
     sudo cpupower frequency-set \
 	 -g performance \

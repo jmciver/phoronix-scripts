@@ -5,6 +5,8 @@ then
     . "local-config.bash"
 fi
 
+export ENABLE_SUDO_CHECK=${ENABLE_SUDO_CHECK-1}
+
 # array of flags separated by :
 FLAGS=${FLAGS-":-fwrapv:-fignore-pure-const-attrs:-fno-strict-aliasing:-fstrict-enums:-fno-delete-null-pointer-checks:-fconstrain-shift-value:-fno-finite-loops:-fno-constrain-bool-value:-fno-use-default-alignment:-fdrop-inbounds-from-gep -mllvm -disable-oob-analysis:-mllvm -zero-uninit-loads:-mllvm -disable-object-based-analysis:-fcheck-div-rem-overflow:-fdrop-noalias-restrict-attr:-fdrop-align-attr:-fdrop-deref-attr:-Xclang -no-enable-noundef-analysis:-fdrop-ub-builtins:-all"}
 
@@ -58,7 +60,7 @@ mkdir size-results || true
 # fi
 
 # Install dependencies
-if [[ $(groups | grep -q sudoers) = 0 ]]
+if [[ $ENABLE_SUDO_CHECK = 1 && $(groups | grep -q sudoers) = 0 ]]
 then
     sudo apt install -y libnl-genl-3-dev php-xml php-dom
 else
@@ -96,7 +98,7 @@ do
 
 	./install-profiles.sh $flags
 	./record-size.sh      `echo $CONCAT_FLAGS | cut -c2-`
-	if [[ $(lscpu | grep -ic x86) = 1 && $(groups | grep -q sudoers) = 0 ]]
+	if [[ $ENABLE_SUDO_CHECK = 1 && $(lscpu | grep -ic x86) = 1 && $(groups | grep -q sudoers) = 0 ]]
 	then
 		sudo swapoff -a; sudo swapon -a
 	fi
