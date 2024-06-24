@@ -16,15 +16,11 @@ then
 	 --max `cpupower frequency-info | grep "hardware limits" | awk '{print $6,$7}' | tr -d ' '`
 fi
 
-PTS_COMMAND="(trap 'kill 0' INT; "
 # Omit the profiles in LLVM Build Speed as they need special treatment
 for p in $(grep -v '#' categorized-profiles.txt | grep -v '/build-')
 do
-	PTS_COMMAND=$PTS_COMMAND"\$PTS debug-install $p 2>&1 | tee \$LOG_DIR/$p.log & "
+	$PTS debug-install $p 2>&1 | tee $LOG_DIR/$p.log
 done
-PTS_COMMAND=$PTS_COMMAND"wait)"
-
-eval $PTS_COMMAND
 
 # Process the profiles in LLVM Build Speed
 if [[ $(grep -v '#' categorized-profiles.txt | grep '/build-' | wc -l) -gt 0 ]]
