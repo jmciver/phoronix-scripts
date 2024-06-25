@@ -1,8 +1,9 @@
 #!/usr/bin/bash -ex
 
-if [ -f "local-config.bash" ]
+declare -r LOCAL_CONFIG=$HOME/local-phoronix-run-config.bash
+if [ -f "$LOCAL_CONFIG" ]
 then
-    . "local-config.bash"
+    . "$LOCAL_CONFIG"
 fi
 
 export ENABLE_SUDO_CHECK=${ENABLE_SUDO_CHECK-1}
