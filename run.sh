@@ -105,7 +105,7 @@ do
 	fi
 	./run-profiles.sh     $CONCAT_FLAGS
 
-	mkdir "$PTS_BASE/test-results$CONCAT_FLAGS/" || true
-	mv -f  $PTS_BM_BASE/test-results/* "$PTS_BASE/test-results$CONCAT_FLAGS/" || true
+	mkdir "$PTS_BM_BASE/test-results$CONCAT_FLAGS/" || true
+	mv -f  $PTS_BM_BASE/test-results/* "$PTS_BM_BASE/test-results$CONCAT_FLAGS/" || true
 	rm -rf $PTS_BM_BASE/installed-tests/*
 done
