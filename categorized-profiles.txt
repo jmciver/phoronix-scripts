@@ -33,7 +33,7 @@ pts/quantlib-1.2.0
 # Circuit Simulator
 pts/ngspice-1.0.0
 # Theorem Prover
-# pts/z3-1.0.0
+pts/z3-1.0.0
 # Prime Generator
 pts/primesieve-1.9.0
 # Scientific computing
