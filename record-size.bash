@@ -40,7 +40,7 @@ collectBuildSizes pts/luajit-1.1.0 LuaJIT-Git/src/luajit
 collectBuildSizes pts/mafft-1.6.2 mafft_/mafft
 collectBuildSizes pts/ngspice-1.0.0 ngspice-34/src/ngspice
 collectBuildSizes pts/openssl-3.1.0 openssl-3.1.0/apps/openssl
-collectSharedSizes pts/rnnoise-1.0.2/rnnoise-git
+collectSharedSizes pts/rnnoise-1.0.2
 collectBuildSizes pts/simdjson-2.0.1 simdjson-2.0.4/build/libsimdjson.a
 collectBuildSizes pts/sqlite-speedtest-1.0.1 sqlite-version-3.46.0/speedtest1
 collectBuildSizes pts/tjbench-1.2.0 libjpeg-turbo-2.1.0/build/tjbench
